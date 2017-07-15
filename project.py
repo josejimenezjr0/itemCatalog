@@ -1,6 +1,6 @@
 from flask import Flask, render_template, url_for, request, redirect, flash,\
     jsonify
-from sqlalchemy import create_engine, asc
+from sqlalchemy import create_engine, asc, desc
 from sqlalchemy.orm import sessionmaker
 from database_setup import User, Category, Item, Base
 from flask import session as login_session
@@ -179,10 +179,11 @@ def gdisconnect():
 @app.route('/')
 def homePage():
     categories = session.query(Category).order_by(asc(Category.name))
+    items = session.query(Item).order_by(desc(Item.id)).limit(5).all()
     if 'username' not in login_session:
-        return render_template('publicItemsCatalog.html', categories=categories)
+        return render_template('publicItemsCatalog.html', categories=categories, items=items)
     else:
-        return render_template('ItemsCatalog.html', categories=categories)
+        return render_template('ItemsCatalog.html', categories=categories, items=items)
 
 # Disconnect
 @app.route('/disconnect')
