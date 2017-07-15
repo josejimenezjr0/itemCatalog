@@ -3,6 +3,10 @@
 	font-weight: 700;
 }
 
+body {
+	padding-top: 50px;
+}
+
 /* div {
 	border: 1px solid red;
 	padding: 3px;
@@ -66,13 +70,13 @@ h3 {
 .padding-none {
 	padding: 0;
 }
-.btn {
+/* .btn {
 	padding: 20px;
 	margin: 0;
 	border-color: #9FB80A;
 	border-width: 2px;
 	color: #9FB80A;;
-}
+} */
 .btn:hover {
 	border-color: #9FB80A;
 }
