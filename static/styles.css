@@ -13,6 +13,12 @@ body {
 	padding: 3px; 
 }   */
 
+.light-text {
+	color: #bbb;
+	font-size: 80%;
+	font-weight: lighter;
+}
+
 .main-cont {
 	background-color: white;
 	border-radius: 15px;

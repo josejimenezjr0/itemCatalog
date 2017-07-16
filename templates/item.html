@@ -26,7 +26,7 @@
 							<div class="hid-div"></div>
 						</div>
 					</div>
-					<h2 class="h2-main">Categories</h2>
+					<h2 class="h2-main">I'm Solo Item!</h2>
 					<ul>
 			{% for category in categories %}
 						<li>
@@ -39,9 +39,9 @@
 				<div class="col-md-9 horiz-sep pad-bot">
 					<div class="row">
 						<div class="col-md-12">
-
-							<div class="hid-div"></div>
-
+							<a href="{{url_for('homePage')}}">
+								<button class="btn-user add" id="new-restaurant">Add Item</button>
+							</a>
 						</div>
 					</div>
 					<h2 class="h2-main">{{categoryOne.name}} Items ({{items|length}} items)</h2>

@@ -26,7 +26,7 @@
 							<div class="hid-div"></div>
 						</div>
 					</div>
-					<h2 class="h2-main">Category</h2>
+					<h2 class="h2-main">Categories</h2>
 					<ul>
 			{% for category in categories %}
 						<li>
@@ -44,12 +44,12 @@
 							</a>
 						</div>
 					</div>
-					<h2 class="h2-main">Items</h2>
+					<h2 class="h2-main">Latest Items</h2>
 					<ul>
 			{% for item in items %}
 						<li>
 							<a href="{{url_for('homePage')}}">
-								<h3>{{item.name}}</h3>
+								<h3>{{item.name}} <span class="light-text">({{item.category.name}})</span></h3>
 							</a>
 						</li>
 			{% endfor %}
