@@ -129,7 +129,6 @@ def gconnect():
 
 # User Helper Functions
 
-
 def createUser(login_session):
     newUser = User(name=login_session['username'], email=login_session[
                    'email'], picture=login_session['picture'])
@@ -152,8 +151,6 @@ def getUserID(email):
         return None
 
 # DISCONNECT - Revoke a current user's token and reset their login_session
-
-
 @app.route('/gdisconnect')
 def gdisconnect():
     # Only disconnect a connected user.
@@ -184,6 +181,17 @@ def homePage():
         return render_template('publicItemsCatalog.html', categories=categories, items=items)
     else:
         return render_template('ItemsCatalog.html', categories=categories, items=items)
+@app.route('/<category_Name>/')
+def itemsList(category_Name):
+    category = session.query(Category).filter_by(name=category_Name).one()
+    creator = getUserInfo(category.user_id)
+    items = session.query(Item).filter_by(
+        category_id=category.id).all()
+    if 'username' not in login_session or creator.id != login_session['user_id']:
+        return render_template('publicItemsList.html', items=items, category=category, creator=creator)
+    else:
+        return render_template('itemsList.html', items=items, category=category, creator=creator)
+
 
 # Disconnect
 @app.route('/disconnect')

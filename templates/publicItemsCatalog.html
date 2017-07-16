@@ -1,57 +1,52 @@
 {% extends "main.html" %}
 {% block content %}
-	 <!-- <div class="row top-menu">
-		<div class="col-md-10"></div>
-		<div class="col-md-2 text-right"></div>
-	</div> -->
-	<!-- <div class="row divider blue">
-		<div class="col-md-12"></div>
-	</div> -->
-	<!-- <div class="row banner main">
-		<div class="col-md-1"></div>
-		<div class="col-md-11 padding-none">
-			<h1>Item Catalog</h1>
-		</div>
-	</div> -->
 
-	<div class = 'flash'>
-		      {% with messages = get_flashed_messages() %}
+	      {% with messages = get_flashed_messages() %}
       {% if messages %}
-          
+	<div class = 'flash'>   
         <ul>
         {% for message in messages %}
-            <li> <strong> {{ message }} </strong> </li>
+            <li> <strong class="strong-show"> {{ message }} </strong> </li>
         {% endfor %}
-        </ul>
+		</ul>
+	{% else %}
+	<div class = 'flash-hidden'>
+		<ul>
+            <li><strong class="strong-hidden">X</strong></li>
+		</ul>
         {% endif %}
     {% endwith %}
 
 </div>
 
-
-	
-	<div class="row padding-top padding-bottom">
-		<div class="col-md-1"></div>
-		<div class="col-md-10 padding-none">
-			
-		</div>
-		<div class="col-md-1"></div>
-	</div>
-
 	<div class="row">
 		<div class="col-md-1"></div>
 		<div class="col-md-3">
-			<h2>Categories</h2>
+			<div class="row">
+				<div class="col-md-12 pad-top">
+					<button class="btn btn-default btn-hidden">
+						<span aria-hidden="true">X</span>
+					</button>
+				</div>
+			</div>
+			<h2>Category</h2>
 			<ul>
 	{% for category in categories %}
 				<li>
-					<a href="{{url_for('homePage')}}">
+					<a href="{{url_for('itemsList', category_Name=category.name)}}">
 						<h3>{{category.name}}</h3>
 					</a>
 				</li>
 	{% endfor %}
 		</div>
 		<div class="col-md-8 horiz-sep">
+			<div class="row">
+				<div class="col-md-12 pad-top">
+					<button class="btn btn-default btn-hidden">
+						<span aria-hidden="true">X</span>
+					</button>
+				</div>
+			</div>
 			<h2>Items</h2>
 			<ul>
 	{% for item in items %}

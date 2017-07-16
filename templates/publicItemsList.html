@@ -31,22 +31,18 @@
 			</div>
 			<h2>Category</h2>
 			<ul>
-	{% for category in categories %}
 				<li>
-					<a href="{{url_for('itemsList', category_Name=category.name)}}">
+					<a href="{{url_for('homePage')}}">
 						<h3>{{category.name}}</h3>
 					</a>
 				</li>
-	{% endfor %}
 		</div>
 		<div class="col-md-8 horiz-sep">
 			<div class="row">
 				<div class="col-md-12 pad-top">
-						<a href="{{url_for('homePage')}}">
-						<button class="btn btn-default" id="new-restaurant">
-							<span aria-hidden="true"></span>!!Add!! !!Item!!
-						</button>
-					</a>
+					<button class="btn btn-default btn-hidden">
+						<span aria-hidden="true">X</span>
+					</button>
 				</div>
 			</div>
 			<h2>Items</h2>

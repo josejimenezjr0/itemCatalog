@@ -21,6 +21,8 @@ class Category(Base):
 
     name = Column(String(100),unique=True, nullable=False)
     id = Column(Integer, primary_key=True)
+    user = relationship(User)
+    user_id = Column(Integer, ForeignKey('user.id'))
     # item = relationship(Item)
 
 class Item(Base):
