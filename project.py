@@ -181,7 +181,8 @@ def homePage():
         return render_template('publicItemsCatalog.html', categories=categories, items=items)
     else:
         return render_template('ItemsCatalog.html', categories=categories, items=items)
-@app.route('/<category_Name>/')
+
+@app.route('/catalog/<category_Name>/')
 def itemsList(category_Name):
     category = session.query(Category).filter_by(name=category_Name).one()
     creator = getUserInfo(category.user_id)
