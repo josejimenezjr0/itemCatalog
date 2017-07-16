@@ -186,12 +186,13 @@ def homePage():
 def itemsList(category_Name):
     category = session.query(Category).filter_by(name=category_Name).one()
     creator = getUserInfo(category.user_id)
+    categories = session.query(Category).order_by(asc(Category.name))
     items = session.query(Item).filter_by(
         category_id=category.id).all()
     if 'username' not in login_session or creator.id != login_session['user_id']:
-        return render_template('publicItemsList.html', items=items, category=category, creator=creator)
+        return render_template('publicItemsList.html', items=items, categories=categories, creator=creator)
     else:
-        return render_template('itemsList.html', items=items, category=category, creator=creator)
+        return render_template('itemsList.html', items=items, categories=categories, creator=creator)
 
 
 # Disconnect

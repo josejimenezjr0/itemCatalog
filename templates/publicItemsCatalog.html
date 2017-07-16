@@ -1,8 +1,8 @@
 {% extends "main.html" %}
 {% block content %}
 
-	      {% with messages = get_flashed_messages() %}
-      {% if messages %}
+	{% with messages = get_flashed_messages() %}
+		{% if messages %}
 	<div class = 'flash'>   
         <ul>
         {% for message in messages %}
@@ -11,51 +11,51 @@
 		</ul>
 	{% else %}
 	<div class = 'flash-hidden'>
-		<ul>
-            <li><strong class="strong-hidden">X</strong></li>
-		</ul>
         {% endif %}
     {% endwith %}
 
-</div>
-
+	</div>
+	
 	<div class="row">
-		<div class="col-md-1"></div>
-		<div class="col-md-3">
-			<div class="row">
-				<div class="col-md-12 pad-top">
-					<button class="btn btn-default btn-hidden">
-						<span aria-hidden="true">X</span>
-					</button>
+		<div class="col-md-2"></div>
+		<div class="col-md-8">
+			<div class="row main-cont">
+				<div class="col-md-3 pad-bot">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="hid-div"></div>
+						</div>
+					</div>
+					<h2 class="h2-main">Category</h2>
+					<ul>
+			{% for category in categories %}
+						<li>
+							<a href="{{url_for('itemsList', category_Name=category.name)}}">
+								<h3>{{category.name}}</h3>
+							</a>
+						</li>
+			{% endfor %}
+				</div>
+				<div class="col-md-9 horiz-sep pad-bot">
+					<div class="row">
+						<div class="col-md-12">
+
+							<div class="hid-div"></div>
+							
+						</div>
+					</div>
+					<h2 class="h2-main">Items</h2>
+					<ul>
+			{% for item in items %}
+						<li>
+							<a href="{{url_for('homePage')}}">
+								<h3>{{item.name}}</h3>
+							</a>
+						</li>
+			{% endfor %}
 				</div>
 			</div>
-			<h2>Category</h2>
-			<ul>
-	{% for category in categories %}
-				<li>
-					<a href="{{url_for('itemsList', category_Name=category.name)}}">
-						<h3>{{category.name}}</h3>
-					</a>
-				</li>
-	{% endfor %}
 		</div>
-		<div class="col-md-8 horiz-sep">
-			<div class="row">
-				<div class="col-md-12 pad-top">
-					<button class="btn btn-default btn-hidden">
-						<span aria-hidden="true">X</span>
-					</button>
-				</div>
-			</div>
-			<h2>Items</h2>
-			<ul>
-	{% for item in items %}
-				<li>
-					<a href="{{url_for('homePage')}}">
-						<h3>{{item.name}}</h3>
-					</a>
-				</li>
-	{% endfor %}
-		</div>
+		<div class="col-md-2"></div>
 	</div>
 {% endblock %}

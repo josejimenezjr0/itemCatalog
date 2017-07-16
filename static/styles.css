@@ -5,18 +5,30 @@
 
 body {
 	padding-top: 50px;
+	background-color: #bbb;
 }
 
 /* div {
 	border: 1px solid red;
-	padding: 3px;
-} */
+	padding: 3px; 
+}   */
+
+.main-cont {
+	background-color: white;
+	border-radius: 15px;
+	/* padding: 0px 15px 15px 15px; */
+}
 
 .pad-top {
 	padding-top: 10px;
 }
+
+.pad-bot {
+	padding-bottom: 15px;
+}
+
 .horiz-sep {
-	border-left: 1px solid red;
+	border-left: 3px solid #42C3C9;
 }
 
 .btn-hidden {
@@ -24,21 +36,35 @@ body {
 	border-color: white;
 }
 
-.flash-hidden {
-	background-color: white;
+.btn-hidden:hover {
 	color: white;
+	border-color: white;
+	background-color: white;
+	border: none;
+	cursor: default;
+}
+
+.flash-hidden {
+	height: 34px;
+	background-color: #bbb;
+	color: #bbb;
 	width:100%;
 	text-decoration: none;
 }
 
 .strong-hidden {
  	font-size: 16px;
- 	color: white;
+ 	color: #bbb;
  	line-height: 24px;
+ }
+
+.hid-div {
+	height: 28px;
  }
 
 ul {
 	list-style-type: none;
+	padding-left: 0px;
 }
 
 .btn-user {
@@ -66,10 +92,15 @@ ul {
 
 .btn-user.add {
 	background-color: transparent;
+	padding: 6px 12px 0px 0px;
 }
 
 .btn-user.add:hover {
 	color: #42C3C9;
+}
+
+.h2-main {
+	margin-top: 0px;
 }
 
 h1 {
