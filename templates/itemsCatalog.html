@@ -35,6 +35,7 @@
 							</a>
 						</li>
 			{% endfor %}
+					</ul>
 				</div>
 				<div class="col-md-9 horiz-sep pad-bot">
 					<div class="row">
@@ -48,11 +49,12 @@
 					<ul>
 			{% for item in items %}
 						<li>
-							<a href="{{url_for('homePage')}}">
+							<a href="{{url_for('item', item_Name=item.name, category_Name=item.category.name)}}">
 								<h3>{{item.name}} <span class="light-text">({{item.category.name}})</span></h3>
 							</a>
 						</li>
 			{% endfor %}
+					</ul>
 				</div>
 			</div>
 		</div>

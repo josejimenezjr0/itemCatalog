@@ -194,6 +194,38 @@ def itemsList(category_Name):
     else:
         return render_template('itemsList.html', items=items, categoryOne=category, categories=categories, creator=creator)
 
+@app.route('/catalog/<category_Name>/<item_Name>/')
+def item(category_Name, item_Name):
+    category = session.query(Category).filter_by(name=category_Name).one()
+    creator = getUserInfo(category.user_id)
+    item = session.query(Item).filter_by(
+        name=item_Name).one()  
+    if 'username' not in login_session or creator.id != login_session['user_id']:
+        return render_template('publicItem.html', item=item)
+    else:
+        return render_template('item.html', item=item)
+
+@app.route('/catalog/<category_Name>/<item_Name>/edit')
+def editItem(category_Name, item_Name):
+    category = session.query(Category).filter_by(name=category_Name).one()
+    creator = getUserInfo(category.user_id)
+    item = session.query(Item).filter_by(
+        name=item_Name).one()  
+    if 'username' not in login_session or creator.id != login_session['user_id']:
+        return render_template('publicItem.html', item=item)
+    else:
+        return render_template('item.html', item=item)
+
+@app.route('/catalog/<category_Name>/<item_Name>/delete')
+def deleteItem(category_Name, item_Name):
+    category = session.query(Category).filter_by(name=category_Name).one()
+    creator = getUserInfo(category.user_id)
+    item = session.query(Item).filter_by(
+        name=item_Name).one()  
+    if 'username' not in login_session or creator.id != login_session['user_id']:
+        return render_template('publicItem.html', item=item)
+    else:
+        return render_template('item.html', item=item)
 
 # Disconnect
 @app.route('/disconnect')
