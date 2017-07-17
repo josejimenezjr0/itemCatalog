@@ -205,27 +205,44 @@ def item(category_Name, item_Name):
     else:
         return render_template('item.html', item=item)
 
-@app.route('/catalog/<category_Name>/<item_Name>/edit')
+@app.route('/catalog/<category_Name>/<item_Name>/edit', methods=['GET', 'POST'])
 def editItem(category_Name, item_Name):
+    if 'username' not in login_session:
+        return redirect('/login')
     category = session.query(Category).filter_by(name=category_Name).one()
+    print "first category is {}".format(category.name)
+    categories = session.query(Category).order_by(asc(Category.name))
     creator = getUserInfo(category.user_id)
-    item = session.query(Item).filter_by(
-        name=item_Name).one()  
-    if 'username' not in login_session or creator.id != login_session['user_id']:
-        return render_template('publicItem.html', item=item)
+    editedItem = session.query(Item).filter_by(name=item_Name).one()
+    if login_session['user_id'] != editedItem.user_id:
+        return "<script>function myFunction() {alert('You are not authorized to edit this item.');}</script><body onload='myFunction()''>"
+    if request.method == 'POST':
+        if request.form['name']:
+            editedItem.name = request.form['name']
+        if request.form['description']:
+            editedItem.description = request.form['description']
+        if request.form['category']:
+            cat = request.form['category']
+            editCategory = session.query(Category).filter_by(name=cat).one()
+            editedItem.category_id = editCategory.id
+        session.add(editedItem)
+        session.commit()
+        flash('Category Item Successfully Edited')
+        return redirect(url_for('itemsList', category_Name=category.name))
     else:
-        return render_template('item.html', item=item)
+        return render_template('editItem.html', item=editedItem, categoryOne=category.name, categories=categories)
 
 @app.route('/catalog/<category_Name>/<item_Name>/delete')
 def deleteItem(category_Name, item_Name):
     category = session.query(Category).filter_by(name=category_Name).one()
+    categories = session.query(Category).order_by(asc(Category.name))
     creator = getUserInfo(category.user_id)
     item = session.query(Item).filter_by(
         name=item_Name).one()  
     if 'username' not in login_session or creator.id != login_session['user_id']:
-        return render_template('publicItem.html', item=item)
+        return render_template('publicDeleteItem.html', item=item, category=category)
     else:
-        return render_template('item.html', item=item)
+        return render_template('deleteItem.html', item=item, categoryOne=category, categories=categories)
 
 # Disconnect
 @app.route('/disconnect')
