@@ -189,7 +189,7 @@ def itemsList(category_Name):
     categories = session.query(Category).order_by(asc(Category.name))
     items = session.query(Item).filter_by(
         category_id=category.id).all()
-    if 'username' not in login_session or creator.id != login_session['user_id']:
+    if 'username' not in login_session:
         return render_template('publicItemsList.html', items=items, categoryOne=category, categories=categories, creator=creator)
     else:
         return render_template('itemsList.html', items=items, categoryOne=category, categories=categories, creator=creator)
@@ -247,6 +247,41 @@ def deleteItem(category_Name, item_Name):
         return redirect(url_for('itemsList', category_Name=category.name))
     else:
         return render_template('deleteItem.html', item=itemToDelete, categoryOne=category.name)
+
+@app.route('/catalog/new/', methods=['GET', 'POST'])
+def addItem():
+    if 'username' not in login_session:
+        return redirect('/login')
+    categories = session.query(Category).order_by(asc(Category.name))
+    if request.method == 'POST':
+        cat = request.form['category']
+        newCatItem = session.query(Category).filter_by(name=cat).one()
+        newItem = Item(
+            name = request.form['name'],
+            description = request.form['description'],
+            user_id=login_session['user_id'],
+            category_id = newCatItem.id)
+        session.add(newItem)
+        session.commit()
+        flash('Category Item Successfully Added')
+        return redirect(url_for('homePage'))
+    else:
+        return render_template('addItem.html', categories=categories)
+
+@app.route('/JSON')
+def catalogJSON():
+    catList = session.query(Category).all()
+    catalog = {}
+    catalog['categories'] = []
+    for i in catList:
+        catSerial = i.serialize
+        itemList = session.query(Item).filter_by(category_id=i.id)
+        catSerial['items'] = []
+        for j in itemList:
+            catSerial['items'].append(j.serialize)
+        catalog['categories'].append(catSerial)
+    return jsonify(catalog)
+        
 
 # Disconnect
 @app.route('/disconnect')
