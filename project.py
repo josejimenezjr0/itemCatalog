@@ -197,9 +197,8 @@ def itemsList(category_Name):
 @app.route('/catalog/<category_Name>/<item_Name>/')
 def item(category_Name, item_Name):
     category = session.query(Category).filter_by(name=category_Name).one()
-    creator = getUserInfo(category.user_id)
-    item = session.query(Item).filter_by(
-        name=item_Name).one()  
+    item = session.query(Item).filter_by(name=item_Name).one() 
+    creator = getUserInfo(item.user_id)
     if 'username' not in login_session or creator.id != login_session['user_id']:
         return render_template('publicItem.html', item=item)
     else:
@@ -210,7 +209,6 @@ def editItem(category_Name, item_Name):
     if 'username' not in login_session:
         return redirect('/login')
     category = session.query(Category).filter_by(name=category_Name).one()
-    print "first category is {}".format(category.name)
     categories = session.query(Category).order_by(asc(Category.name))
     creator = getUserInfo(category.user_id)
     editedItem = session.query(Item).filter_by(name=item_Name).one()
@@ -232,17 +230,23 @@ def editItem(category_Name, item_Name):
     else:
         return render_template('editItem.html', item=editedItem, categoryOne=category.name, categories=categories)
 
-@app.route('/catalog/<category_Name>/<item_Name>/delete')
+@app.route('/catalog/<category_Name>/<item_Name>/delete', methods=['GET', 'POST'])
 def deleteItem(category_Name, item_Name):
+    if 'username' not in login_session:
+        return redirect('/login')
     category = session.query(Category).filter_by(name=category_Name).one()
     categories = session.query(Category).order_by(asc(Category.name))
     creator = getUserInfo(category.user_id)
-    item = session.query(Item).filter_by(
-        name=item_Name).one()  
-    if 'username' not in login_session or creator.id != login_session['user_id']:
-        return render_template('publicDeleteItem.html', item=item, category=category)
+    itemToDelete = session.query(Item).filter_by(name=item_Name).one()
+    if login_session['user_id'] != itemToDelete.user_id:
+        return "<script>function myFunction() {alert('You are not authorized to delete this item.');}</script><body onload='myFunction()''>"
+    if request.method == 'POST':
+        session.delete(itemToDelete)
+        session.commit()
+        flash('Category Item Successfully Deleted')
+        return redirect(url_for('itemsList', category_Name=category.name))
     else:
-        return render_template('deleteItem.html', item=item, categoryOne=category, categories=categories)
+        return render_template('deleteItem.html', item=itemToDelete, categoryOne=category.name)
 
 # Disconnect
 @app.route('/disconnect')
