@@ -49,6 +49,6 @@ class Item(Base):
             'id': self.id,
         }
 
-dbString = 'postgresql://postgres:postgres@127.0.0.1:5432/itemCatalog'
+dbString = 'postgresql://postgres:postgres@127.0.0.1:5432/itemcatalog'
 engine = create_engine(dbString)
 Base.metadata.create_all(engine)

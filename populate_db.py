@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import User, Category, Item, Base
 
-dbString = 'postgresql://postgres:postgres@127.0.0.1:5432/itemCatalog'
+dbString = 'postgresql://postgres:postgres@127.0.0.1:5432/itemcatalog'
 engine = create_engine(dbString)
 Base.metadata.bind = engine
 

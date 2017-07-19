@@ -4,3 +4,4 @@ __pycache__/
 *.sqlite3
 notes.md
 junk.txt
+.pylintrc
