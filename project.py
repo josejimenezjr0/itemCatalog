@@ -185,14 +185,13 @@ def homePage():
 @app.route('/catalog/<category_Name>/')
 def itemsList(category_Name):
     category = session.query(Category).filter_by(name=category_Name).one()
-    creator = getUserInfo(category.user_id)
     categories = session.query(Category).order_by(asc(Category.name))
     items = session.query(Item).filter_by(
         category_id=category.id).all()
     if 'username' not in login_session:
-        return render_template('publicItemsList.html', items=items, categoryOne=category, categories=categories, creator=creator)
+        return render_template('publicItemsList.html', items=items, categoryOne=category, categories=categories)
     else:
-        return render_template('itemsList.html', items=items, categoryOne=category, categories=categories, creator=creator)
+        return render_template('itemsList.html', items=items, categoryOne=category, categories=categories)
 
 @app.route('/catalog/<category_Name>/<item_Name>/')
 def item(category_Name, item_Name):
@@ -210,7 +209,6 @@ def editItem(category_Name, item_Name):
         return redirect('/login')
     category = session.query(Category).filter_by(name=category_Name).one()
     categories = session.query(Category).order_by(asc(Category.name))
-    creator = getUserInfo(category.user_id)
     editedItem = session.query(Item).filter_by(name=item_Name).one()
     if login_session['user_id'] != editedItem.user_id:
         return "<script>function myFunction() {alert('You are not authorized to edit this item.');}</script><body onload='myFunction()''>"
@@ -236,7 +234,6 @@ def deleteItem(category_Name, item_Name):
         return redirect('/login')
     category = session.query(Category).filter_by(name=category_Name).one()
     categories = session.query(Category).order_by(asc(Category.name))
-    creator = getUserInfo(category.user_id)
     itemToDelete = session.query(Item).filter_by(name=item_Name).one()
     if login_session['user_id'] != itemToDelete.user_id:
         return "<script>function myFunction() {alert('You are not authorized to delete this item.');}</script><body onload='myFunction()''>"
