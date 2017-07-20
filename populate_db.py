@@ -1,7 +1,13 @@
+#!/usr/bin/env python
+"""
+Populates the database with initial categories and items
+"""
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import User, Category, Item, Base
 
+#Setup datbase connections
 dbString = 'postgresql://postgres:postgres@127.0.0.1:5432/itemcatalog'
 engine = create_engine(dbString)
 Base.metadata.bind = engine
@@ -19,8 +25,9 @@ category1 = Category(name='Football')
 session.add(category1)
 session.commit()
 
+#Items for Football
 desc = [
-    'A padded helmet with a', 
+    'A padded helmet with a',
     ' face mask to protect the head of football players'
     ]
 
@@ -62,6 +69,7 @@ category1 = Category(name='Baseball')
 session.add(category1)
 session.commit()
 
+#items for Baseball
 desc = [
     'A sphere 3 inches in diameter with cork ',
     'center covered by stitched horsehide.'
@@ -100,6 +108,7 @@ category1 = Category(name='Hockey')
 session.add(category1)
 session.commit()
 
+#items for Hockey
 item = Item(
     name='Puck',
     description='A black disk of vulcanized rubber.',

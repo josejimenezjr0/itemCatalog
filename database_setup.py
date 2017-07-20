@@ -1,3 +1,8 @@
+#!/usr/bin/env python
+"""
+Creates schema for database
+"""
+
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -7,6 +12,9 @@ Base = declarative_base()
 
 
 class User(Base):
+    """
+    Setup database model for a user
+    """
     __tablename__ = 'user'
 
     email = Column(String(100), unique=True, nullable=False)
@@ -14,10 +22,14 @@ class User(Base):
     name = Column(String(250), nullable=False)
     picture = Column(String(250))
 
+
 class Category(Base):
+    """
+    Setup database model for a category
+    """
     __tablename__ = 'category'
 
-    name = Column(String(100),unique=True, nullable=False)
+    name = Column(String(100), unique=True, nullable=False)
     id = Column(Integer, primary_key=True)
     user = relationship(User)
     user_id = Column(Integer, ForeignKey('user.id'))
@@ -31,6 +43,9 @@ class Category(Base):
         }
 
 class Item(Base):
+    """
+    Setup database model for an item
+    """
     __tablename__ = 'item'
     name = Column(String(100), unique=True, nullable=True)
     id = Column(Integer, primary_key=True)
@@ -49,6 +64,7 @@ class Item(Base):
             'id': self.id,
         }
 
+#Database connection
 dbString = 'postgresql://postgres:postgres@127.0.0.1:5432/itemcatalog'
 engine = create_engine(dbString)
 Base.metadata.create_all(engine)
