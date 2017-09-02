@@ -8,7 +8,7 @@ from sqlalchemy.orm import sessionmaker
 from database_setup import User, Category, Item, Base
 
 #Setup datbase connections
-dbString = 'postgresql://postgres:postgres@127.0.0.1:5432/itemcatalog'
+dbString = 'postgresql://postgres:grader@127.0.0.1:5432/itemcatalog'
 engine = create_engine(dbString)
 Base.metadata.bind = engine
 
