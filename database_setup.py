@@ -65,6 +65,6 @@ class Item(Base):
         }
 
 #Database connection
-dbString = 'postgresql://postgres:postgres@127.0.0.1:5432/itemcatalog'
+dbString = 'postgresql://catalog:grader@127.0.0.1:5432/itemcatalog'
 engine = create_engine(dbString)
 Base.metadata.create_all(engine)
